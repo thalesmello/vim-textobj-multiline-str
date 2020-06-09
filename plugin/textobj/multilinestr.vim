@@ -9,10 +9,12 @@ call textobj#user#plugin('multilinestr', {
 
 augroup multilinestr_textobj
   autocmd!
-  autocmd FileType python call textobj#user#map('multilinestr', {
-        \   'python': {
-        \     'select-a': 'aq',
-        \     'select-i': 'iq',
-        \   },
-        \ })
+  if !exists("g:textobj_multilinestr_no_default_key_mappings")
+    autocmd FileType python call textobj#user#map('multilinestr', {
+          \   'python': {
+          \     'select-a': '<buffer> aq',
+          \     'select-i': '<buffer> iq',
+          \   },
+          \ })
+  endif
 augroup END

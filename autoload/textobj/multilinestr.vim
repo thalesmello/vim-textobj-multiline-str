@@ -1,4 +1,12 @@
-function! textobj#multilinestr#select()
+function! textobj#multilinestr#select_a() abort
+    return textobj#multilinestr#select("a")
+endfunction
+
+function! textobj#multilinestr#select_i() abort
+    return textobj#multilinestr#select("i")
+endfunction
+
+function! textobj#multilinestr#select(mode)
     if !s:CheckInsidePythonString()
         return 0
     endif
@@ -8,11 +16,7 @@ function! textobj#multilinestr#select()
 
     if quote_type == 0
         return 0
-    endif
-
-    let start = getpos('.')
-
-    if quote_type == 1
+    elseif quote_type == 1
         let end_quote = '"""'
     elseif quote_type == 2
         let end_quote = "'''"
@@ -21,11 +25,24 @@ function! textobj#multilinestr#select()
         return 0
     endif
 
-    let end = search(end_quote, 'We')
+    if a:mode == "a"
+        let start = getpos('.')
+        " Goes to the end of the beginning match, to match with the closing
+        " quote later
+        call search(end_quote, 'We')
+    elseif a:mode == "i"
+        " Try to match the first character after the tripple quote
+        call search(end_quote . '\n\?\zs', "W")
+        let start = getpos('.')
+    endif
 
-    if end == 0
+    if search(end_quote, 'We') == 0
         " No end quote was found
         return 0
+    endif
+
+    if a:mode == "i"
+        call search('\_.\n\?' . end_quote, 'Wb')
     endif
 
     let end = getpos('.')

@@ -2,7 +2,7 @@
 
 This plugin defines a *multiline-str* text object for the [vim-textobj-user](https://github.com/kana/vim-textobj-user) plugin.
 
-![demo](./methodcall_demo.gif)
+![demo](./multilinestr.gif)
 
 # Installing
 

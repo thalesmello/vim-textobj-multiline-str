@@ -12,7 +12,7 @@ With [vim-plug](https://github.com/junegunn/vim-plug):
 Plug 'kana/vim-textobj-user' | Plug 'thalesmello/vim-textobj-multiline-str'
 ```
 
-# Default mappings 
+# Default mappings
 
 For Python files:
 

@@ -17,7 +17,7 @@ Plug 'kana/vim-textobj-user' | Plug 'thalesmello/vim-textobj-multiline-str'
 For Python files:
 
 * `aq`: around multiline string. Gets the string contents and the quotes.
-* `im`: inner multiline string. Gets the string contents without the quotes and immediate linebreaks.
+* `iq`: inner multiline string. Gets the string contents without the quotes and immediate linebreaks.
 
 # Custom mappings
 

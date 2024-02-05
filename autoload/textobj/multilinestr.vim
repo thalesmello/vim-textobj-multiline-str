@@ -11,8 +11,10 @@ function! textobj#multilinestr#select(mode)
         return 0
     endif
 
+    echomsg 'Inside string!'
+
     " We are inside a Python multiline string, so we have to find the boundaries
-    let quote_type = search('"""\|\(''''''\)', 'bWp')
+    let quote_type = search('[fr]\?"""\|\([rf]\?''''''\)', 'bWp')
 
     if quote_type == 0
         return 0
@@ -51,5 +53,14 @@ function! textobj#multilinestr#select(mode)
 endfunction
 
 function s:CheckInsidePythonString()
-    return index(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), "pythonString") >= 0
+    let syntaxGroups = map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+    let stringTypes = ['pythonString', 'pythonRawString', 'pythonFString']
+
+    for strType in stringTypes
+        if index(syntaxGroups, strType) >= 0
+            return 1
+        endif
+    endfor
+
+    return 0
 endfunction
